@@ -3,7 +3,7 @@ from ToDo.models import ToDoModel
 
 def post_into_todo(text):
     if not text:
-        return {"success": False, "massage": "Text not found!", "status": 400}
+        return {"success": False, "statusCode": 0,"massage": "Text not found!"}
     element = ToDoModel.objects.create(text=text)
     task_data = {
         "id": element.id,

@@ -1,14 +1,20 @@
 from ToDo.models import ToDoModel
 
+
 def patch_all(status):
     if not isinstance(status, bool):
         return {"success": False, "statusCode": 0, "message": "Must be False or True!"}
     ToDoModel.objects.update(status=status)
     return {"success": True, "statusCode": 1, "message": "Success"}
 
+
 def patch_single_status(status, id):
     if not isinstance(status, bool):
-        return {"success": False, "statusCode": 0, "message": "Status must be False or True!"}
+        return {
+            "success": False,
+            "statusCode": 0,
+            "message": "Status must be False or True!",
+        }
     elif not isinstance(id, int):
         return {"success": False, "statusCode": 0, "message": "ID must be int!"}
     try:
@@ -18,6 +24,7 @@ def patch_single_status(status, id):
         return {"success": True, "statusCode": 1, "message": "Success"}
     except ToDoModel.DoesNotExist:
         return {"success": False, "statusCode": 0, "message": "Item not found"}
+
 
 def patch_single_text(text, id):
     if not isinstance(text, str):
