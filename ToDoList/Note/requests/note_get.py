@@ -18,8 +18,8 @@ def get_from_note(page, size):
                 "id": item.id,
                 "title": item.title,
                 "content": item.content,
-                "createdAt": item.createdAt,
-                "updatedAt": item.updatedAt,
+                "createdAt": item.createdAt.isoformat(),
+                "updatedAt": item.updatedAt.isoformat(),
             }
         )
     response = {"success": True, "statusCode": 1, "message": "Success", "data": data}
@@ -27,10 +27,15 @@ def get_from_note(page, size):
 
 
 def get_id(id):
-    if not isinstance(id, int):
-        return {"success": False, "statusCode": 0, "massage": "ID must be integer!"}
     try:
         note = NoteModel.objects.get(id=id)
-        return {"success": True, "statusCode": 1, "massage": "Success", "data": note}
+        data = {
+            "id": note.id,
+            "title": note.title,
+            "content": note.content,
+            "createdAt": note.createdAt.isoformat(),
+            "updatedAt": note.updatedAt.isoformat(),
+        }
+        return {"success": True, "statusCode": 1, "message": "Success", "data": data}
     except NoteModel.DoesNotExist:
-        return {"success": False, "statusCode": 0, "massage": "ID not found!"}
+        return {"success": False, "statusCode": 0, "message": "ID not found!"}

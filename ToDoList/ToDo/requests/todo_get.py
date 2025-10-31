@@ -24,14 +24,14 @@ def get_from_todo(page, per_page, status):
                 "id": item.id,
                 "text": item.text,
                 "status": item.status,
-                "createdAt": item.createdAt,
-                "updatedAt": item.updatedAt,
+                "createdAt": item.createdAt.isoformat(),
+                "updatedAt": item.updatedAt.isoformat(),
             }
         )
     response = {
         "content": content,
-        "pageNumber": post.number - 1,
-        "pageSize": per_page,
+        "pageNumber": post.number,
+        "pageSize": int(per_page),
         "totalPages": paginator.num_pages,
         "totalElements": paginator.count,
     }

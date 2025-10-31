@@ -28,17 +28,17 @@ class notes_id(View):
         return JsonResponse(response)
 
     def patch(self, request, id):
-        data = json.loads(request)
+        data = json.loads(request.body)
         response = note_patch.patch_id(data["title"], data["content"], id)
         return JsonResponse(response)
 
     def delete(self, request, id):
         if not isinstance(id, int):
             return JsonResponse(
-                {"success": False, "statusCode": 0, "massage": "ID must be integer!"}
+                {"success": False, "statusCode": 0, "message": "ID must be integer!"}
             )
         try:
             NoteModel.objects.filter(id=id).delete()
             return JsonResponse({"success": True, "statusCode": 1, "message": "Success"})
         except NoteModel.DoesNotExist:
-            return JsonResponse({"success": False, "statusCode": 0, "massage": "Item not found!"})
+            return JsonResponse({"success": False, "statusCode": 0, "message": "Item not found!"})
